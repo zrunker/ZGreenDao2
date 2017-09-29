@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
     private void queryOneToMany() {
         List<User> list = userDao.queryBuilder().list();
         for (User user : list) {
-            List<Friend> friends = user.getFriendList();
+            List<Friend> friends = user.getFriends();
             Log.d("oneTomany", user.toString());
             for (Friend friend : friends) {
                 Log.d("oneTomany", friend.toString());
