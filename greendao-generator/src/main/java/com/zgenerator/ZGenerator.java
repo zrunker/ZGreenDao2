@@ -39,7 +39,7 @@ public class ZGenerator {
         Property fUid = friend.addLongProperty("fUid").getProperty();
 
         friend.addToOne(user, fUid);// 一对一
-        user.addToMany(friend, fUid);// 一对多
+        user.addToMany(friend, fUid).setName("friends");// 一对多
 
         // 生成相关文件
         try {
