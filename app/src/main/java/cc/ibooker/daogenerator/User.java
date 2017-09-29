@@ -28,7 +28,7 @@ public class User {
     /** Used for active entity operations. */
     private transient UserDao myDao;
 
-    private List<Friend> friendList;
+    private List<Friend> friends;
 
     public User() {
     }
@@ -146,25 +146,25 @@ public class User {
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<Friend> getFriendList() {
-        if (friendList == null) {
+    public List<Friend> getFriends() {
+        if (friends == null) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             FriendDao targetDao = daoSession.getFriendDao();
-            List<Friend> friendListNew = targetDao._queryUser_FriendList(id);
+            List<Friend> friendsNew = targetDao._queryUser_Friends(id);
             synchronized (this) {
-                if(friendList == null) {
-                    friendList = friendListNew;
+                if(friends == null) {
+                    friends = friendsNew;
                 }
             }
         }
-        return friendList;
+        return friends;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetFriendList() {
-        friendList = null;
+    public synchronized void resetFriends() {
+        friends = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
@@ -191,23 +191,4 @@ public class User {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", uId=" + uId +
-                ", uRealname='" + uRealname + '\'' +
-                ", uSex='" + uSex + '\'' +
-                ", uBirthday='" + uBirthday + '\'' +
-                ", uHeight=" + uHeight +
-                ", uWeight=" + uWeight +
-                ", uDomicile='" + uDomicile + '\'' +
-                ", uPhone=" + uPhone +
-                ", uEmail='" + uEmail + '\'' +
-                ", uWeibo='" + uWeibo + '\'' +
-                ", daoSession=" + daoSession +
-                ", myDao=" + myDao +
-                ", friendList=" + friendList +
-                '}';
-    }
 }

@@ -35,7 +35,7 @@ public class FriendDao extends AbstractDao<Friend, Long> {
 
     private DaoSession daoSession;
 
-    private Query<Friend> user_FriendListQuery;
+    private Query<Friend> user_FriendsQuery;
 
     public FriendDao(DaoConfig config) {
         super(config);
@@ -136,16 +136,16 @@ public class FriendDao extends AbstractDao<Friend, Long> {
         return true;
     }
     
-    /** Internal query to resolve the "friendList" to-many relationship of User. */
-    public List<Friend> _queryUser_FriendList(Long fUid) {
+    /** Internal query to resolve the "friends" to-many relationship of User. */
+    public List<Friend> _queryUser_Friends(Long fUid) {
         synchronized (this) {
-            if (user_FriendListQuery == null) {
+            if (user_FriendsQuery == null) {
                 QueryBuilder<Friend> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.FUid.eq(null));
-                user_FriendListQuery = queryBuilder.build();
+                user_FriendsQuery = queryBuilder.build();
             }
         }
-        Query<Friend> query = user_FriendListQuery.forCurrentThread();
+        Query<Friend> query = user_FriendsQuery.forCurrentThread();
         query.setParameter(0, fUid);
         return query.list();
     }

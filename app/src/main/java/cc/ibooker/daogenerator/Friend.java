@@ -115,13 +115,4 @@ public class Friend {
         myDao.refresh(this);
     }
 
-    @Override
-    public String toString() {
-        return "Friend{" +
-                "id=" + id +
-                ", fGname='" + fGname + '\'' +
-                ", fUid=" + fUid +
-                ", user=" + user +
-                '}';
-    }
 }
